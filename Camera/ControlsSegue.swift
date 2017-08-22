@@ -19,18 +19,18 @@ class ControlsSegue: UIStoryboardSegue {
 	
 	
 	override func perform() {
-		if let destinationViewController = destinationViewController as? UIViewController {
+		if let destinationViewController = destination as? UIViewController {
 			
 			if let currentControlsViewController = currentViewController {
-				currentControlsViewController.willMoveToParentViewController(nil)
+				currentControlsViewController.willMove(toParentViewController: nil)
 				currentControlsViewController.removeFromParentViewController()
 				currentControlsViewController.view.removeFromSuperview()
 			}
 
-			sourceViewController.addChildViewController(destinationViewController as UIViewController)
+			source.addChildViewController(destinationViewController as UIViewController)
 			hostView!.addSubview(destinationViewController.view)
 			destinationViewController.view.frame = hostView!.bounds
-			destinationViewController.didMoveToParentViewController(sourceViewController as? UIViewController)
+			destinationViewController.didMove(toParentViewController: source as? UIViewController)
 		}
 	}
 }

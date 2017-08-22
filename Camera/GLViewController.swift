@@ -16,57 +16,60 @@ class GLViewController: UIViewController {
 
 	var cameraController:CameraController!
 	
-	private var glContext:EAGLContext?
-	private var ciContext:CIContext?
-	private var renderBuffer:GLuint = GLuint()
+	fileprivate var glContext:EAGLContext?
+	fileprivate var ciContext:CIContext?
+	fileprivate var renderBuffer:GLuint = GLuint()
 	
-	private var glView:GLKView {
+	fileprivate var glView:GLKView {
 		get {
-			return view as GLKView
-		}
+			return view as! GLKView
+        }
 	}
 
 
 	override func viewDidLoad() {
         super.viewDidLoad()
 	
-		glContext = EAGLContext(API: .OpenGLES2)
+		glContext = EAGLContext(api: .openGLES2)
 		
 		
-		glView.context = glContext
+		glView.context = glContext!
 //		glView.drawableDepthFormat = .Format24
-		glView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+		glView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
 		if let window = glView.window {
 			glView.frame = window.bounds
 		}
 		
-		ciContext = CIContext(EAGLContext: glContext)
+		ciContext = CIContext(eaglContext: glContext!)
 
 //		cameraController = CameraController(previewType: .Manual, delegate: self)
 	}
 
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		cameraController.startRunning()
 	}
 	
 	
 	// MARK: CameraControllerDelegate
 
-	func cameraController(cameraController: CameraController, didDetectFaces faces: NSArray) {
+	func cameraController(_ cameraController: CameraController, didDetectFaces faces: NSArray) {
 		
 	}
 
 	
-	func cameraController(cameraController: CameraController, didOutputImage image: CIImage) {
+	func cameraController(_ cameraController: CameraController, didOutputImage image: CIImage) {
 
-		if glContext != EAGLContext.currentContext() {
-			EAGLContext.setCurrentContext(glContext)
+		if glContext != EAGLContext.current() {
+			EAGLContext.setCurrent(glContext)
 		}
 		
 		glView.bindDrawable()
 
-		ciContext?.drawImage(image, inRect:image.extent(), fromRect: image.extent())
+		ciContext?.draw(image,
+		                in:image.extent,
+		                from: image.extent
+        )
 
 		glView.display()
 	}
