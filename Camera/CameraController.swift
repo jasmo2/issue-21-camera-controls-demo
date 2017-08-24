@@ -38,7 +38,7 @@ enum CameraControllePreviewType {
 }
 
 
-extension AVCaptureWhiteBalanceGains {
+extension AVCaptureDevice.WhiteBalanceGains {
 	mutating func clampGainsToRange(_ minVal:Float, maxVal:Float) {
 		blueGain = max(min(blueGain, maxVal), minVal)
 		redGain = max(min(redGain, maxVal), minVal)
@@ -56,7 +56,7 @@ class WhiteBalanceValues {
 		self.tint = tint
 	}
 	
-	convenience init(temperatureAndTintValues:AVCaptureWhiteBalanceTemperatureAndTintValues) {
+    convenience init(temperatureAndTintValues:AVCaptureDevice.WhiteBalanceTemperatureAndTintValues) {
 		self.init(temperature: temperatureAndTintValues.temperature, tint:temperatureAndTintValues.tint)
 	}
 }
@@ -120,7 +120,7 @@ class CameraController: NSObject {
 	func initializeSession() {
 		
 		session = AVCaptureSession()
-		session.sessionPreset = AVCaptureSessionPresetPhoto
+        session.sessionPreset = AVCaptureSession.Preset.photo
 		
 		if previewType == .previewLayer {
 			previewLayer = AVCaptureVideoPreviewLayer.layerWithSession(self.session) as AVCaptureVideoPreviewLayer
@@ -260,7 +260,7 @@ class CameraController: NSObject {
 	
 	func setCustomExposureWithISO(_ iso:Float) {
 		performConfigurationOnCurrentCameraDevice { (currentDevice) -> Void in
-			currentDevice.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, iso: iso, completionHandler: nil)
+            currentDevice.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: iso, completionHandler: nil)
 		}
 	}
 	
