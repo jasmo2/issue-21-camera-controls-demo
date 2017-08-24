@@ -5,6 +5,7 @@
 //  Created by Matteo Caldari on 08/01/15.
 //  Copyright (c) 2015 Matteo Caldari. All rights reserved.
 //
+// updated to swift 4 by jasmo2
 
 import UIKit
 
@@ -130,7 +131,7 @@ class CameraViewController : UIViewController, CameraControllerDelegate, CameraS
 	
 	@IBAction func focusOnPointOfInterest(_ sender: UITapGestureRecognizer) {
 		if sender.state == UIGestureRecognizerState.ended {
-			var point = sender.location(in: sender.view)
+            let point = sender.location(in: sender.view)
 			cameraController.lockFocusAtPointOfInterest(point)
 		}
 	}
@@ -172,7 +173,7 @@ class CameraViewController : UIViewController, CameraControllerDelegate, CameraS
 
 		prepareFaceViews(faces.count - faceViews.count)
 
-		for (idx, face) in enumerated(faces) {
+		for (idx, face) in faces.enumerated() {
 			faceViews[idx].frame = face.frame
 		}
 	}

@@ -57,7 +57,7 @@ class FocusViewController: UIViewController, CameraControlsViewControllerProtoco
 	}
 
 	
-	func setInitialValues() {
+	@objc func setInitialValues() {
 		if isViewLoaded && cameraController != nil {
 			if let autoFocus = cameraController?.isContinuousAutoFocusEnabled() {
 				modeSwitch.isOn = autoFocus

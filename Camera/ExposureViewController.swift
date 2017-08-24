@@ -78,7 +78,7 @@ class ExposureViewController: UIViewController, CameraControlsViewControllerProt
 	}
 	
 	
-	func setInitialValues() {
+	@objc func setInitialValues() {
 		if isViewLoaded && cameraController != nil {
 			if let autoExposure = cameraController?.isContinuousAutoExposureEnabled() {
 				modeSwitch.isOn = autoExposure
@@ -100,7 +100,7 @@ class ExposureViewController: UIViewController, CameraControlsViewControllerProt
 	}
 
 	
-	func updateSliders() {
+	@objc func updateSliders() {
 		for slider in [durationSlider, isoSlider] as [UISlider] {
 			slider.isEnabled = !modeSwitch.isOn
 		}

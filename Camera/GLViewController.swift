@@ -14,7 +14,7 @@ import OpenGLES
 class GLViewController: UIViewController {
 
 
-	var cameraController:CameraController!
+	@objc var cameraController:CameraController!
 	
 	fileprivate var glContext:EAGLContext?
 	fileprivate var ciContext:CIContext?
@@ -53,12 +53,12 @@ class GLViewController: UIViewController {
 	
 	// MARK: CameraControllerDelegate
 
-	func cameraController(_ cameraController: CameraController, didDetectFaces faces: NSArray) {
+	@objc func cameraController(_ cameraController: CameraController, didDetectFaces faces: NSArray) {
 		
 	}
 
 	
-	func cameraController(_ cameraController: CameraController, didOutputImage image: CIImage) {
+	@objc func cameraController(_ cameraController: CameraController, didOutputImage image: CIImage) {
 
 		if glContext != EAGLContext.current() {
 			EAGLContext.setCurrent(glContext)
