@@ -76,7 +76,9 @@ class CameraViewController : UIViewController, CameraControllerDelegate, CameraS
 			
 			controlsSegue.currentViewController = currentControlsViewController
 			controlsSegue.hostView = controlsView
-			currentControlsViewController = controlsSegue.destination as? UIViewController
+//            currentControlsViewController = controlsSegue.destination as? UIViewController
+            currentControlsViewController = controlsSegue.destination
+            
 			if let currentControlsViewController = currentControlsViewController as? CameraControlsViewControllerProtocol {
 				currentControlsViewController.cameraController = cameraController!
 			}
@@ -116,7 +118,7 @@ class CameraViewController : UIViewController, CameraControllerDelegate, CameraS
 			}
 			
 			controlsView.isHidden = false
-			self.performSegue(withIdentifier: segueIdentifier as! String, sender: self)
+            self.performSegue(withIdentifier: segueIdentifier! as String, sender: self)
 		}
 	}
 	
